@@ -1,0 +1,44 @@
+{% import "bootstrap/utils.html" as utils %}
+{% import "bootstrap/wtf.html" as wtf %}
+{% extends "layout.html" %}
+{% block title %}Account Generator{% endblock %}
+{% block body_content %}
+	
+<div class="content-section">
+			<br/>
+			{{ utils.flashed_messages() }}
+			<br/>
+  	<div class="center">
+			<h1 style="text-align:center;">Bank Account</h1>
+         	<hr class="intro-divider">
+        		<table class="table table-striped table-bordered">
+          			<thead>
+		                <tr>
+		                  <th width="10%"> Name </th>
+		                  <th width="20%"> Card Number </th>
+		                  <th width="15%"> Account Number </th>
+		                  <th width="20%"> Sort Code </th>
+		                  <th width="5%"> CVC </th>
+		                  <th width="30%"> IBAN </th>
+		                </tr>
+          			</thead>
+          			<tbody>
+			                <tr>
+			                  	<td> {{ user.first_name }} {{ user.last_name}} </td>
+			                  	<td> {{ user.cardnumber }} </td>
+			                  	<td> {{ user.accountnumber }} </td>
+			                  	<td> {{ user.sortcode }} </td>
+			                    <td> {{ user.cvc }} </td>
+			                  	<td> {{ user.iban }} </td>
+			                </tr>
+          			</tbody>
+				</table>
+          		<div style="text-align: center">
+			        <div style="text-align: center">
+         	    		{{ wtf.quick_form(form) }}
+	    			</div>
+	    		</div>
+	</div>
+</div>			
+
+{% endblock body_content %}

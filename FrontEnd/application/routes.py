@@ -52,14 +52,6 @@ def add_conference():
 
     return render_template('conference.html', action="Add", title='Add Conference', form=form, add_conference=add_conference)
 
-
-        conference=form.conference.data,
-        abstract=form.abstract.data,
-        speaker=form.speaker.data,
-        company=form.company.data,
-        email=form.email.data,
-        bio=form.bio.data,
-
 @app.route('/conferences/edit/<int:id>', methods=['GET', 'POST'])
 @login_required
 def edit_books(id):

@@ -1,8 +1,7 @@
 version: "3.7"
 services:
   frontend-service:
-  # image: jenkins-ansible:5000/frontend:${BUILD_NUMBER}
-    image: ansible-jenkins:5000/frontend:${BUILD_NUMBER}
+    image: frontend
     deploy:
       replicas: 2
     container_name: frontend
@@ -16,42 +15,42 @@ services:
     - SECRET_KEY=${SECRET_KEY}
 
   central-service:
-    image: ansible-jenkins:5000/central-service:${BUILD_NUMBER}
+    image: central-service
     deploy:
       replicas: 2
     container_name: central
     build: CentralServer
 
   country-service:
-    image: ansible-jenkins:5000/country-service:${BUILD_NUMBER}
+    image: country-service
     deploy:
       replicas: 2
     container_name: country
     build: CountryGenerator
 
   account-service:
-    image: ansible-jenkins:5000/account-service:${BUILD_NUMBER}
+    image: account-service
     deploy:
       replicas: 3
     container_name: account
     build: AccountGenerator/
 
   sort-service:
-    image: ansible-jenkins:5000/sort-service:${BUILD_NUMBER}
+    image: sort-service
     deploy:
       replicas: 2
     container_name: sort
     build: SortGenerator/
 
   cardnumber-service:
-    image: ansible-jenkins:5000/cardnumber-service:${BUILD_NUMBER}
+    image: cardnumber-service
     deploy:
       replicas: 2
     container_name: cardnumber
     build: CardNumberGenerator/
 
   cvc-service:
-    image: ansible-jenkins:5000/cvc-service:${BUILD_NUMBER}
+    image: cvc-service
     deploy:
       replicas: 2
     container_name: cvc

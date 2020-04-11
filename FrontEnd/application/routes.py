@@ -117,7 +117,7 @@ def attendees():
 
 @app.route('/attendees/add', methods=['GET', 'POST'])
 @login_required
-def add_attendees():
+def add_attendee():
 
     add_attendee = True
 

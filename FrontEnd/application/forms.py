@@ -106,7 +106,7 @@ class UpdateAccountForm(FlaskForm):
 
         
 class ConferenceForm(FlaskForm):
-        title = StringField('Title',
+        conference = StringField('Conference',
                 validators=[
                         DataRequired(),
                         Length(min=2, max=60)

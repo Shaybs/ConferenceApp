@@ -177,10 +177,4 @@ class AttendeeForm(FlaskForm):
                 ]
         )
 
-        rating = IntegerField('Rating',
-                validators=[
-                        NumberRange(min=0,max=5,message='Rating out of range')
-                ]
-        )
-
         submit = SubmitField('Add Attendee')

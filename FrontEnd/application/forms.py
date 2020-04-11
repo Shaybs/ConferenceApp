@@ -2,7 +2,7 @@ from flask_wtf import FlaskForm
 from wtforms.ext.sqlalchemy.fields import QuerySelectField
 from wtforms import StringField, IntegerField, PasswordField, SubmitField, BooleanField, SelectField
 from wtforms.validators import DataRequired, Length, Email, EqualTo, ValidationError, NumberRange
-from application.models import Users
+from application.models import Users, Conferences, Attendees
 from flask_login import current_user
 
 class LoginForm(FlaskForm):

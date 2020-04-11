@@ -1,5 +1,5 @@
 from flask import abort, render_template, redirect, url_for, request, flash
-from application.forms import RegistrationForm, LoginForm, UpdateAccountForm, CountryForm
+from application.forms import RegistrationForm, LoginForm, UpdateAccountForm
 from application.models import Users
 from application import app, db, bcrypt, login_manager
 import requests

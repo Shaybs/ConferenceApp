@@ -32,7 +32,7 @@ class Attendees(db.Model):
             self.company
             ])
 
-class Conferences(db.Model, UserMixin):
+class Conferences(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     conference = db.Column(db.String(60), nullable=False, unique=True)
     abstract = db.Column(db.String(2500), nullable=False)

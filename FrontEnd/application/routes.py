@@ -20,7 +20,7 @@ def about():
 
 @app.route('/conferences', methods=['GET', 'POST'])
 @login_required
-def books():
+def conferences():
     #List all conference
     conferences = Conferences.query.all()
     return render_template('conferences.html', title='Conferences', conferences=conferences)
@@ -54,7 +54,7 @@ def add_conference():
 
 @app.route('/conferences/edit/<int:id>', methods=['GET', 'POST'])
 @login_required
-def edit_books(id):
+def edit_conferences(id):
 
     add_conference = False
 
@@ -82,9 +82,9 @@ def edit_books(id):
 
     return render_template('conference.html', action="Edit", add_conference=add_conference, conference=conference, form=form, title="Edit Conference")
 
-@app.route('/books/delete/<int:id>', methods=['GET', 'POST'])
+@app.route('/conferences/delete/<int:id>', methods=['GET', 'POST'])
 @login_required
-def delete_books(id):
+def delete_conferences(id):
 
     attendees = Attendees.query.filter_by(conference_id=id)
     for attendee in attendees:

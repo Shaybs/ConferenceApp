@@ -157,7 +157,7 @@ def edit_attendee(id):
         #return to attendees list
         return redirect(url_for('attendees'))
 
-    form.conference.data = review.conference_ref
+    form.conference.data = attendee.conference_ref
     form.name.data = attendee.name
     form.company.data = attendee.company
     form.email.data = attendee.email

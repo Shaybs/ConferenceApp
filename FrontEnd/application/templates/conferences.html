@@ -16,10 +16,11 @@
         		<table class="table table-striped table-bordered">
           			<thead>
 		                <tr>
-		                  <th width="10%"> Book </th>
-		                  <th width="10%"> Author </th>
-		                  <th width="40%"> Description </th>
-		                  <th width="10%"> Rating </th>
+		                  <th width="10%"> Conference </th>
+		                  <th width="10%"> Speaker </th>
+		                  <th width="40%"> Company </th>
+		                  <th width="10%"> email </th>
+		                  <th width="10%"> Biography </th>
 		                  <th width="10%"> Edit </th>
 		                  <th width="10%"> Delete </th>
 		                </tr>
@@ -28,14 +29,18 @@
           				{% for book in books %}
 			                <tr>
 			                  	<td> {{ conference.conference }} </td>
+			                  	<td> {{ conference.speaker }} </td>
+			                  	<td> {{ conference.company }} </td>
+			                  	<td> {{ conference.email }} </td>
+			                  	<td> {{ conference.bio }} </td>
 			                  	<td>
-				                  	<a href="{{ url_for('edit_books', id=book.id) }}">
+				                  	<a href="{{ url_for('edit_conferences', id=conference.id) }}">
                       					<i class="fa fa-pencil"></i>
                       					Edit
                       				</a>
 			                  	</td>
 			                  	<td>
-			                  		<a href="{{ url_for('delete_books', id=book.id) }}">
+			                  		<a href="{{ url_for('delete_conferences', id=conference.id) }}">
                       					<i class="fa fa-trash"></i>
                       					Delete
                       				</a>
@@ -47,10 +52,10 @@
           		<div style="text-align: center">
 		        {% else %}
 			        <div style="text-align: center">
-			            <h3> No books have been added. </h3>
+			            <h3> No Conferences have been added. </h3>
 			            <hr class="intro-divider">
 			{% endif %}
-			            <a href="{{ url_for('add_book') }}" class="btn btn-default btn-lg">
+			            <a href="{{ url_for('add_conference') }}" class="btn btn-default btn-lg">
 	            			<i class="fa fa-plus"></i>
 	            			Add Conference
 	    				</a>

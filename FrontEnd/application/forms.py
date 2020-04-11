@@ -148,7 +148,7 @@ class ConferenceForm(FlaskForm):
                 ]
         )
 
-        submit = SubmitField('Add Conference')
+        submit = SubmitField('Add or Edit Conference')
 
 class AttendeeForm(FlaskForm):
         conference = QuerySelectField(
@@ -177,4 +177,4 @@ class AttendeeForm(FlaskForm):
                 ]
         )
 
-        submit = SubmitField('Add Attendee')
+        submit = SubmitField('Add or Edit Attendee')

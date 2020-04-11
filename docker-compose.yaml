@@ -21,41 +21,6 @@ services:
     container_name: central
     build: CentralServer
 
-  country-service:
-    image: country-service
-    deploy:
-      replicas: 2
-    container_name: country
-    build: CountryGenerator
-
-  account-service:
-    image: account-service
-    deploy:
-      replicas: 3
-    container_name: account
-    build: AccountGenerator/
-
-  sort-service:
-    image: sort-service
-    deploy:
-      replicas: 2
-    container_name: sort
-    build: SortGenerator/
-
-  cardnumber-service:
-    image: cardnumber-service
-    deploy:
-      replicas: 2
-    container_name: cardnumber
-    build: CardNumberGenerator/
-
-  cvc-service:
-    image: cvc-service
-    deploy:
-      replicas: 2
-    container_name: cvc
-    build: CVCGenerator/
-
   nginx:
     image: nginx:latest
     deploy:

@@ -141,7 +141,7 @@ class ConferenceForm(FlaskForm):
                 ]
         )
 
-        bio = StringField('Bio',
+        bio = StringField('Biography',
                 validators=[
                         DataRequired(),
                         Length(min=2, max=250)
@@ -182,6 +182,5 @@ class AttendeeForm(FlaskForm):
                         NumberRange(min=0,max=5,message='Rating out of range')
                 ]
         )
-
 
         submit = SubmitField('Add Attendee')

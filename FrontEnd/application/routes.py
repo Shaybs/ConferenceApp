@@ -1,6 +1,6 @@
 from flask import abort, render_template, redirect, url_for, request, flash
-from application.forms import RegistrationForm, LoginForm, UpdateAccountForm
-from application.models import Users
+from application.forms import RegistrationForm, LoginForm, UpdateAccountForm, AttendeeForm, ConferenceForm
+from application.models import Users, Attendees, Conferences
 from application import app, db, bcrypt, login_manager
 import requests
 from flask_login import login_user, current_user, logout_user, login_required
@@ -16,33 +16,174 @@ def home():
 def about():
 	return render_template('about.html', title='About')
 
-#Render the about page
-@app.route('/accountgenerator', methods=['GET', 'POST'])
+
+
+@app.route('/conferences', methods=['GET', 'POST'])
 @login_required
-def accountgenerator():
-	
-	#list User's name
-	user = Users.query.get(current_user.id)
+def books():
+    #List all conference
+    conferences = Conferences.query.all()
+    return render_template('conferences.html', title='Conferences', conferences=conferences)
 
-	form = CountryForm()
-	if form.validate_on_submit():
-		country = form.country.data
-		try:
-			iban = requests.post('http://central-service:5000/post-iban', json={"Country":country})
-			if iban.ok:
-				current_user.iban = iban.json()["IBAN"]
-				current_user.accountnumber = iban.json()["BankAccount"]
-				current_user.sortcode = iban.json()["Sort"]
-				current_user.cardnumber = iban.json()["CardNumber"]
-				current_user.cvc = iban.json()["CVC"]
-				db.session.commit()
-				flash('You have successfully generated a bank account!')
-				return redirect(url_for('accountgenerator'))
-		except:
-			flash('Error')
-		return redirect(url_for('accountgenerator'))
 
-	return render_template('accountgenerator.html', title='Account Generator', user=user, form=form)
+@app.route('/conferences/add', methods=['GET', 'POST'])
+@login_required
+def add_conference():
+
+    add_conference = True
+
+    form = ConferenceForm()
+    if form.validate_on_submit():
+        conference = Conferences(
+        conference=form.conference.data,
+        abstract=form.abstract.data,
+        speaker=form.speaker.data,
+        company=form.company.data,
+        email=form.email.data,
+        bio=form.bio.data,
+        )
+        try:
+            db.session.add(conference)
+            db.session.commit()
+            flash('You have successfully added a new book')
+        except:
+            flash('Error: The book already exists')
+        return redirect(url_for('conferences'))
+
+    return render_template('conference.html', action="Add", title='Add Conference', form=form, add_conference=add_conference)
+
+
+        conference=form.conference.data,
+        abstract=form.abstract.data,
+        speaker=form.speaker.data,
+        company=form.company.data,
+        email=form.email.data,
+        bio=form.bio.data,
+
+@app.route('/conferences/edit/<int:id>', methods=['GET', 'POST'])
+@login_required
+def edit_books(id):
+
+    add_conference = False
+
+    conference = Conferences.query.get_or_404(id)
+    form = ConferenceForm(obj=book)
+    if form.validate_on_submit():
+        conference.conference = form.conference.data
+        conference.abstract = form.abstract.data
+        conference.speaker = form.speaker.data
+        conference.company = form.company.data
+        conference.email = form.email.data
+        conference.bio = form.bio.data
+        db.session.commit()
+        flash('You have successfully edited the conference')
+        #return to conferences list
+        return redirect(url_for('conferences'))
+
+
+    form.conference.data = conference.conference
+    form.abstract.data = conference.abstract
+    form.speaker.data = conference.speaker
+    form.company.data = conference.company
+    form.email.data = conference.email
+    form.bio.data = conference.bio
+
+    return render_template('conference.html', action="Edit", add_conference=add_conference, conference=conference, form=form, title="Edit Conference")
+
+@app.route('/books/delete/<int:id>', methods=['GET', 'POST'])
+@login_required
+def delete_books(id):
+
+    attendees = Attendees.query.filter_by(conference_id=id)
+    for attendee in attendees:
+        db.session.delete(attendee)
+
+    conference = Conferences.query.get_or_404(id)
+    db.session.delete(conference)
+    db.session.commit()
+    flash('You have successfully deleted a conference')
+
+    return redirect(url_for('conferences'))
+
+    return render_template(title="Delete Conferences")
+
+
+@app.route('/attendees')
+@login_required
+def attendees():
+
+    attendees = Attendees.query.all()
+
+    return render_template('attendees.html', title='Attendees', attendees=attendees)
+
+
+    name = db.Column(db.String(100), nullable=False)
+    company = db.Column(db.String(100), nullable=False)
+    email = db.Column(db.String(250), nullable=False, unique=True)
+    date_posted = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
+
+
+@app.route('/attendees/add', methods=['GET', 'POST'])
+@login_required
+def add_attendees():
+
+    add_attendee = True
+
+    form = AttendeeForm()
+    if form.validate_on_submit():
+        attendee = Attendees(
+        name=form.name.data,
+        company=form.company.data,
+        email=form.email.data,
+        conference_ref=form.conference.data
+        )
+        try:
+            db.session.add(attendee)
+            db.session.commit()
+            flash('You have successfully added a new Attendee')
+        except:
+            flash('Error: The attendee already exists')
+        return redirect(url_for('attendees'))
+
+    return render_template('attendee.html', action="Add", title='Add Attendee', form=form, add_attendee=add_attendee)
+
+@app.route('/attendees/edit/<int:id>', methods=['GET', 'POST'])
+@login_required
+def edit_attendee(id):
+
+    add_attendee = False
+
+    attendee = Attendees.query.get_or_404(id)
+    form = ReviewForm(obj=review)
+    if form.validate_on_submit():
+        attendee.name = form.name.data
+        attendee.company = form.company.data
+        attendee.email = form.email.data
+        conference_ref = form.conference.data
+        db.session.commit()
+        flash('You have successfully edited the Attendee')
+        #return to attendees list
+        return redirect(url_for('attendees'))
+
+    form.conference.data = review.conference_ref
+    form.name.data = attendee.name
+    form.company.data = attendee.company
+    form.email.data = attendee.email
+
+    return render_template('attendee.html', action="Edit", add_attendee=add_attendee, attendee=attendee, form=form, title="Edit Attendee")
+
+@app.route('/attendees/delete/<int:id>', methods=['GET', 'POST'])
+@login_required
+def delete_attendee(id):
+    attendee = Attendees.query.get_or_404(id)
+    db.session.delete(attendee)
+    db.session.commit()
+    flash('You have successfully deleted the attendee')
+    return redirect(url_for('attendees'))
+
+    return render_template(title="Delete Attendee")
+
+
 
 #Render the login page
 @app.route('/login', methods=['GET', 'POST'])
@@ -120,15 +261,3 @@ def account():
 
 	return render_template('account.html', title='Account', form=form)
 
-@app.route('/new-iban', methods=['GET', 'POST'])
-def iban():
-	iban = requests.post('http://central-service:5000/post-iban', json={"Country":"Pakistan"})
-	if iban.ok:
-		current_user.iban = iban.json()["IBAN"]
-		current_user.accountnumber = iban.json()["BankAccount"]
-		current_user.sortcode = iban.json()["Sort"]
-		current_user.cardnumber = iban.json()["CardNumber"]
-		current_user.cvc = iban.json()["CVC"]
-		db.session.commit()
-		return redirect(url_for('accountgenerator'))
-	return "OK\n"

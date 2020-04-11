@@ -146,7 +146,7 @@ def edit_attendee(id):
     add_attendee = False
 
     attendee = Attendees.query.get_or_404(id)
-    form = ReviewForm(obj=review)
+    form = AttendeeForm(obj=attendee)
     if form.validate_on_submit():
         attendee.name = form.name.data
         attendee.company = form.company.data

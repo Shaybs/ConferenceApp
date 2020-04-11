@@ -45,9 +45,9 @@ def add_conference():
         try:
             db.session.add(conference)
             db.session.commit()
-            flash('You have successfully added a new book')
+            flash('You have successfully added a new conference')
         except:
-            flash('Error: The book already exists')
+            flash('Error: The conference already exists')
         return redirect(url_for('conferences'))
 
     return render_template('conference.html', action="Add", title='Add Conference', form=form, add_conference=add_conference)
@@ -59,7 +59,7 @@ def edit_conferences(id):
     add_conference = False
 
     conference = Conferences.query.get_or_404(id)
-    form = ConferenceForm(obj=book)
+    form = ConferenceForm(obj=conference)
     if form.validate_on_submit():
         conference.conference = form.conference.data
         conference.abstract = form.abstract.data

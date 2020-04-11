@@ -103,23 +103,85 @@ class UpdateAccountForm(FlaskForm):
                         if user:
                                 raise ValidationError('Email already in use - Please choose another')
 
-        
-class CountryForm(FlaskForm):
-        country = SelectField('Country',
-                choices=[
-                ('Pakistan', 'Pakistan'),
-                ('Belarus', 'Belarus'),
-                ('United Kingdom', 'United Kingdom'),
-                ('United Arab Emirates', 'United Arab Emirates'),
-                ('South Korea', 'South Korea'),
-                ('Italy', 'Italy'),
-                ('China', 'China'),
-                ('India', 'India'),
-                ('Singapore', 'Singapore'),
-                ('Denmark', 'Denmark'),
-                ('Switzerland', 'Switzerland')
-                ]
-        )
-        submit = SubmitField('Generate Bank Account')
 
         
+class ConferenceForm(FlaskForm):
+        title = StringField('Title',
+                validators=[
+                        DataRequired(),
+                        Length(min=2, max=60)
+                ]
+        )
+
+        abstract = StringField('Abstract',
+                validators=[
+                        DataRequired(),
+                        Length(min=2, max=2500)
+                ]
+        )
+
+        speaker = StringField('Speaker',
+                validators=[
+                        DataRequired(),
+                        Length(min=2, max=250)
+                ]
+        )
+
+        company = StringField('Company',
+                validators=[
+                        DataRequired(),
+                        Length(min=2, max=100)
+                ]
+        )
+
+        email = StringField('Email',
+                validators=[
+                        DataRequired(),
+                        Length(min=2, max=250)
+                ]
+        )
+
+        bio = StringField('Bio',
+                validators=[
+                        DataRequired(),
+                        Length(min=2, max=250)
+                ]
+        )
+
+        submit = SubmitField('Add Conference')
+
+class AttendeeForm(FlaskForm):
+        conference = QuerySelectField(
+                query_factory=lambda: Conferences.query.all(),
+                get_label="conference"
+        )
+
+        name = StringField('Name',
+                validators=[
+                        DataRequired(),
+                        Length(min=2, max=60)
+                ]
+        )
+
+        company = StringField('Company',
+                validators=[
+                        DataRequired(),
+                        Length(min=2, max=100)
+                ]
+        )
+
+        email = StringField('Email',
+                validators=[
+                        DataRequired(),
+                        Email()
+                ]
+        )
+
+        rating = IntegerField('Rating',
+                validators=[
+                        NumberRange(min=0,max=5,message='Rating out of range')
+                ]
+        )
+
+
+        submit = SubmitField('Add Attendee')

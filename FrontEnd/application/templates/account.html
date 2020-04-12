@@ -1,3 +1,4 @@
+<!-- Make relevant imports and extend the layout -->
 {% import "bootstrap/utils.html" as utils %}
 {% import "bootstrap/wtf.html" as wtf %}
 {% extends "layout.html" %}
@@ -5,9 +6,10 @@
 {% block body_content %}
 <div class="content-section">
 	<div class="center">
+	<!-- Refer to the signed in user to add a bit of personalisation -->
 	<h1 style="text-align:center;">{{ current_user.first_name }} {{ current_user.last_name }} Account</h1>
 	<hr class="intro-divider">
-
+	<!-- Use WTForms library to generate the form -->
 	{{ wtf.quick_form(form) }}
 
 	</div>

@@ -1,3 +1,4 @@
+#Makes the relevant imports
 from flask_wtf import FlaskForm
 from wtforms.ext.sqlalchemy.fields import QuerySelectField
 from wtforms import StringField, IntegerField, PasswordField, SubmitField, BooleanField, SelectField
@@ -5,6 +6,7 @@ from wtforms.validators import DataRequired, Length, Email, EqualTo, ValidationE
 from application.models import Users, Conferences, Attendees
 from flask_login import current_user
 
+#All the forms and validators
 class LoginForm(FlaskForm):
         username = StringField('Username',
                 validators=[

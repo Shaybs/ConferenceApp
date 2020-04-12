@@ -18,7 +18,7 @@ class Users(db.Model, UserMixin):
                             'Email: ', self.email, '\r\n',
                            'Name: ', self.first_name, ' ', self.last_name])
 
-
+#Creates the Attendees table
 class Attendees(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(100), nullable=False)
@@ -33,6 +33,7 @@ class Attendees(db.Model):
             self.company
             ])
 
+#Created the Conferences tables
 class Conferences(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     conference = db.Column(db.String(60), nullable=False, unique=True)

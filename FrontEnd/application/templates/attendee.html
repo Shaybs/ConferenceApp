@@ -1,6 +1,8 @@
+<!-- Make relevant imports and extend the layout -->
 {% import "bootstrap/utils.html" as utils %}
 {% import "bootstrap/wtf.html" as wtf %}
 {% extends "layout.html" %}
+<!-- Display the relevant information based on the add_attendee input -->
 {% block title %}
     {% if add_attendee %}
         Add Attendee
@@ -13,6 +15,7 @@
 <div class="content-section">
     <div class="center">
         <br>
+        <!-- Add or edit attendee based on what was passed on through the routes -->
         {% if add_attendee %}
             <h1>Add Attendee</h1>
         {% else %}
